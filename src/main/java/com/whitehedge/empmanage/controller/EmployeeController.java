@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,14 +58,25 @@ public class EmployeeController {
 
 	/************************ API FOR GETTING EMPLOYEE BY ID ***************************/
 	@GetMapping("/empbyid/{id}")
-	public ResponseEntity<Employee> getEmployeeList(@PathVariable String id) {
+	public ResponseEntity<Employee> getEmployeeById(@PathVariable String id) {
 
-		Employee employee = employeeService.getEmployeeList(id);
+		Employee employee = employeeService.getEmployeeById(id);
 
 		logger.info("Employee fetched");
 		return new ResponseEntity<>(employee, HttpStatus.OK);
 
 	}
 	
+	
+	/************************ API FOR UPDATE EMPLOYEE ***************************/
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Employee> update(@PathVariable String id, @RequestBody Employee employee) {
+
+		Employee updatedEmp = employeeService.updateEmployee(id, employee);
+
+		logger.info("Employee updated");
+		return new ResponseEntity<>(updatedEmp, HttpStatus.OK);
+
+	}
 	
 }

@@ -13,6 +13,8 @@ public interface EmployeeService {
 
 	List<Employee> getEmployeeList();
 
-	Employee getEmployeeList(String id);
+	Employee getEmployeeById(String id);
+
+	Employee updateEmployee(String id, Employee employee);
 
 }

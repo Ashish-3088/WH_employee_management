@@ -25,8 +25,23 @@ public class EmployeeServiceimpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee getEmployeeList(String id) {
+	public Employee getEmployeeById(String id) {
 		return employeeRepository.findById(id).get();
+	}
+
+	@Override
+	public Employee updateEmployee(String id , Employee employee) {
+		
+		Employee emp = employeeRepository.findById(id).get();
+		
+		if (emp != null) {
+			emp.setAge(employee.getAge());
+			emp.setCity(employee.getCity());
+			emp.setName(employee.getName());
+			return employeeRepository.save(emp);
+		}
+		
+		return employeeRepository.save(emp);
 	}
 
 }
