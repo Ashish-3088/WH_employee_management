@@ -2,9 +2,13 @@ package com.whitehedge.empmanage.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +34,7 @@ public class EmployeeController {
 
 	/************************ API FOR ADDING EMPLOYEES ***************************/
 	@PostMapping("/add")
-	public ResponseEntity<Employee> addEmployee(@RequestBody Employee emp) {
+	public ResponseEntity<Employee> addEmployee(@RequestBody @Valid Employee emp) {
 
 		Employee employee = employeeService.addEmployee(emp);
 		logger.info("Employee Saved in DB");
@@ -110,5 +114,23 @@ public class EmployeeController {
 		return new ResponseEntity<>(delete, HttpStatus.OK);
 
 	}
+	
+	/************************ API FOR GETTING EMPLOYEE LIST BY PAGINATION & SORTING ***************************/
+	@GetMapping("/emplistbypageable")
+	public ResponseEntity<Page<Employee>> getEmployeesPageable(Pageable pageable) {
+
+		Page<Employee> emppagiable = employeeService.getEmployeesPageable(pageable);
+
+		if (emppagiable != null) {
+
+			logger.info("Employee list fetched");
+			return new ResponseEntity<>(emppagiable, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(emppagiable, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+	
+	
 	
 }

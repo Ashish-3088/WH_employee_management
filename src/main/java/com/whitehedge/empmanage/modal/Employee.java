@@ -4,36 +4,34 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-//@Where(clause="isvisible=true")
 public class Employee {
-	
-	
+
 	@Id
 	@GeneratedValue(generator = "UUID")
 	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
 	private String id;
 
+	@NotEmpty(message = "Name is required")
 	private String name;
 
+	@NotEmpty(message = "Please provide a city")
 	private String city;
 
 	private int age;
-	
+
 	@JsonIgnore
-	@Column(name="isvisible")
-	private boolean isvisible = true ;
+	@Column(name = "isvisible")
+	private boolean isvisible = true;
 
 	public Employee() {
 	}
-
-	
 
 	public Employee(String id, String name, String city, int age, boolean isvisible) {
 		super();
@@ -43,8 +41,6 @@ public class Employee {
 		this.age = age;
 		this.isvisible = isvisible;
 	}
-
-
 
 	public String getId() {
 		return id;
@@ -85,6 +81,5 @@ public class Employee {
 	public void setIsvisible(boolean isvisible) {
 		this.isvisible = isvisible;
 	}
-	
 
 }
