@@ -19,4 +19,6 @@ public interface EmployeeService {
 
 	String deleteEmployee(String id);
 
+	String softDeleteEmployee(String id);
+
 }

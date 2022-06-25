@@ -21,12 +21,20 @@ public class EmployeeServiceimpl implements EmployeeService {
 
 	@Override
 	public List<Employee> getEmployeeList() {
-		return employeeRepository.findAll();
+		return employeeRepository.findByIsvisible(true);
 	}
 
 	@Override
 	public Employee getEmployeeById(String id) {
-		return employeeRepository.findById(id).get();
+		
+		Employee emp = employeeRepository.findById(id).get();
+		
+		if (emp.isIsvisible() == true) {
+			return emp;
+		} else {
+			return null;
+		}
+	
 	}
 
 	@Override
@@ -48,6 +56,19 @@ public class EmployeeServiceimpl implements EmployeeService {
 	public String deleteEmployee(String id) {
 		employeeRepository.deleteById(id);
 		return id;
+	}
+
+	@Override
+	public String softDeleteEmployee(String id) {
+		Employee emp = employeeRepository.findById(id).get();
+
+		if (emp != null) {
+			emp.setIsvisible(false);
+			employeeRepository.save(emp);
+			return "Employee deleted Successfully";
+		}
+
+		return "Employee delete failed";
 	}
 
 }

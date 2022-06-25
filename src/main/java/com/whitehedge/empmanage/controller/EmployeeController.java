@@ -62,9 +62,16 @@ public class EmployeeController {
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable String id) {
 
 		Employee employee = employeeService.getEmployeeById(id);
+		
+		if (employee != null) {
 
-		logger.info("Employee fetched");
-		return new ResponseEntity<>(employee, HttpStatus.OK);
+			logger.info("Employee fetched");
+			return new ResponseEntity<>(employee, HttpStatus.OK);
+		} else {
+			logger.info("Employee not found");
+			return new ResponseEntity<>(employee, HttpStatus.NO_CONTENT);
+		}
+
 
 	}
 	
@@ -88,6 +95,19 @@ public class EmployeeController {
 
 		logger.info("Employee Deleted");
 		return new ResponseEntity<>(deleteid, HttpStatus.OK);
+
+	}
+	
+	
+	/************************ API FOR SOFT DELETE EMPLOYEE ***************************/
+	
+	@GetMapping("/softdelete/{id}")
+	public ResponseEntity<String> softDeleteEmployee(@PathVariable String id) {
+
+		String delete = employeeService.softDeleteEmployee(id);
+
+		
+		return new ResponseEntity<>(delete, HttpStatus.OK);
 
 	}
 	
