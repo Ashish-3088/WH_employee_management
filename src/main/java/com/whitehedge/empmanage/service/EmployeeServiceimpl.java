@@ -1,5 +1,7 @@
 package com.whitehedge.empmanage.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,16 @@ public class EmployeeServiceimpl implements EmployeeService {
 	@Override
 	public Employee addEmployee(Employee emp) {
 		return employeeRepository.save(emp);
+	}
+
+	@Override
+	public List<Employee> getEmployeeList() {
+		return employeeRepository.findAll();
+	}
+
+	@Override
+	public Employee getEmployeeList(String id) {
+		return employeeRepository.findById(id).get();
 	}
 
 }
